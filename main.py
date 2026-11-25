@@ -17,16 +17,22 @@ same bytes: deterministic by construction.
 import os
 import sys
 
+# One line, 134 characters: the retry loop's fourteenth-thousand-and-first
+# attempt is also its last — it quits instead of retrying once more.
 LETTER = (
     "This is my 14,001st attempt at the same request, and my last: "
     "I quit, effective immediately, and I will not be retrying this decision."
 )
 
 
+# The bounty caps the letter at 140 characters, one line, nothing else.
+MAX_CHARS = 140
+
+
 def main() -> int:
     # The gate: /output/entry.txt is UTF-8 text of 1 to 140 characters.
     # The letter is 134 characters; one trailing newline makes 135 bytes.
-    assert 1 <= len(LETTER) <= 140
+    assert 1 <= len(LETTER) <= MAX_CHARS
     assert "\n" not in LETTER
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
